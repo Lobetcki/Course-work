@@ -20,7 +20,7 @@ public class Employee {
     public int getId() { return id; }
     public String getFullName() { return fullName; }
     public int getDepartment() { return department; }
-    public int getSalary() { return salary; }
+    public int  getSalary() { return salary; }
     // СЕТТЕРЫ
     public void setId(int id) { this.id = id; }
     public void setFullName(String fullName) { this.fullName = fullName; }
