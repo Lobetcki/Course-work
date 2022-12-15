@@ -10,7 +10,7 @@ public class Employee {
     public Employee(String fullName, int department, int salary) {
         //this.wocker = new Employee[10]; // Создали базу данных на 10 мест
 
-        this.id = count++;         // Заполнение полей данных
+        id = count++;         // Заполнение полей данных
         this.fullName = fullName;
         this.department = department;
         this.salary = salary;

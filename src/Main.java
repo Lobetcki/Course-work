@@ -1,17 +1,17 @@
 public class Main {
-    private Employee[] employees;
+    private static final Employee[] employees = new Employee[10];
 
     // ВЫВОД ВСЕХ ДАННЫХ
-    public static void printAllEmployees(Employee[] wocker) {
-        for (Employee employee : wocker) {
+    public static void printAllEmployees() {
+        for (Employee employee : employees) {
             System.out.println(employee);
         }
     }
 
     // Зарплата всех сотрудников
-    public static int countingSumSalaru(Employee[] wocker) {
+    public static int countingSumSalaru() {
         int sumSalary = 0;
-        for (Employee value : wocker) {
+        for (Employee value : employees) {
             if (value != null) {
                 sumSalary += value.getSalary();
             }
@@ -20,9 +20,9 @@ public class Main {
     }
 
     // Средний оклад
-    public static int calculationAverageSalary(Employee[] wocker) {
-        int sumSalary = 0;
-        int average = countingSumSalaru(wocker);
+    public static int calculationAverageSalary() {
+        //int sumSalary = 0;
+        int average = countingSumSalaru();
         System.out.println("Зарплата всех сотрудников составит: " + average + " руб.");
         average = average / Employee.count;
 
@@ -30,10 +30,10 @@ public class Main {
     }
 
     // Работник с МIN ЗП
-    public static Employee findMinSalary(Employee[] wocker) {
-        int minSalary = wocker[0].getSalary();
+    public static Employee findMinSalary() {
+        int minSalary = employees[0].getSalary();
         Employee minSalaryWocker = null;
-        for (Employee value : wocker) {
+        for (Employee value : employees) {
             if ((value != null) && (minSalary > value.getSalary())) {
                 minSalary = value.getSalary();
                 minSalaryWocker = value;
@@ -43,10 +43,10 @@ public class Main {
     }
 
     // Работник с МAX ЗП
-    public static Employee findMaxSalary(Employee[] wocker) {
-        int maxSalary = wocker[0].getSalary();
+    public static Employee findMaxSalary() {
+        int maxSalary = employees[0].getSalary();
         Employee maxSalaryWocker = null;
-        for (Employee value : wocker) {
+        for (Employee value : employees) {
             if (value != null && maxSalary < value.getSalary()) {
                 maxSalary = value.getSalary();
                 maxSalaryWocker = value;
@@ -56,8 +56,8 @@ public class Main {
     }
 
     // ИМЕНА СОТРУДНИКОВ
-    public static void printFullName(Employee[] wocker) {
-        for (Employee value : wocker) {
+    public static void printFullName() {
+        for (Employee value : employees) {
             if (value != null) {
                 System.out.println(value.getFullName());
             }
@@ -66,45 +66,42 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Employee[] wocker = new Employee[10];
-
 
         // добавляем работников
-        wocker[0] = new Employee("asd asdas asd", 2, 55000);
-        wocker[1] = new Employee("Ник Ник Горбунков", 5, 60000);
-        wocker[5] = new Employee("Ник Ник Николаев", 5, 50000);
-        wocker[6] = new Employee("Вова Вова Вовавич", 3, 60000);
-        wocker[8] = new Employee("Ваня Ваня Иванов", 2, 65000);
-        wocker[9] = new Employee("Иван Иванович Сидоров", 1, 55000);
-        wocker[3] = new Employee("Петя Петя Петров", 4, 35000);
-        wocker[2] = new Employee("Саня Саня Петров", 5, 30000);
+        employees[0] = new Employee("asd asdas asd", 2, 55000);
+        employees[1] = new Employee("Ник Ник Горбунков", 5, 60000);
+        employees[5] = new Employee("Ник Ник Николаев", 5, 50000);
+        employees[6] = new Employee("Вова Вова Вовавич", 3, 60000);
+        employees[9] = new Employee("Иван Иванович Сидоров", 1, 55000);
+        employees[3] = new Employee("Петя Петя Петров", 4, 35000);
+        employees[2] = new Employee("Саня Саня Петров", 5, 30000);
 
         // Распечатываем ВСЕе ДАННЫЕ
-        printAllEmployees(wocker);
-        System.out.println();
+        printAllEmployees();
+        System.out.println(employees);
 
         // ОБШАЯ ЗАРПЛАТА
-        countingSumSalaru(wocker);
+        countingSumSalaru();
         System.out.println();
 
         // Работник с МIN ЗП
-        Employee minSalary = findMinSalary(wocker);
+        Employee minSalary = findMinSalary();
         System.out.println("Самый МАЛЕНЬКИЙ оклад у " + minSalary);
         System.out.println();
 
         // Работник с МAX ЗП
-        Employee maxSalary = findMaxSalary(wocker);
+        Employee maxSalary = findMaxSalary();
         System.out.println("Самый БОЛЬШОЙ оклад у " + maxSalary);
         System.out.println();
 
 
         // СРЕДНЯЯ ЗП
-        int averageSalary = calculationAverageSalary(wocker);
+        int averageSalary = calculationAverageSalary();
         System.out.println("Средняя зарплата: " + averageSalary);
         System.out.println();
 
         // ИМЕНА СОТРУДНИКОВ
-        printFullName(wocker);
+        printFullName();
         System.out.println();
 
     }
