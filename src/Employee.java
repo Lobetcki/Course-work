@@ -5,7 +5,6 @@ public class Employee {
     private String fullName;
     private int department;
     private int salary;
-    //private Employee[] wocker;  // Объявили массив Employee, реализуемый в классе Employee
 
     // КОНСТРУКТОР
     public Employee(String fullName, int department, int salary) {

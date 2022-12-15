@@ -1,10 +1,6 @@
 public class Main {
     private Employee[] employees;
 
-//    public void main1() {
-//        Employee[] employee = new Employee[10]  // Создали базу данных на 10 мест
-//    }
-
     // ВЫВОД ВСЕХ ДАННЫХ
     public static void printAllEmployees(Employee[] wocker) {
         for (Employee employee : wocker) {
@@ -13,8 +9,8 @@ public class Main {
     }
 
     // Зарплата всех сотрудников
-    public static int countingSumSalaru(Employee[] wocker, int sumSalary) {
-        sumSalary = 0;
+    public static int countingSumSalaru(Employee[] wocker) {
+        int sumSalary = 0;
         for (Employee value : wocker) {
             if (value != null) {
                 sumSalary += value.getSalary();
@@ -26,7 +22,7 @@ public class Main {
     // Средний оклад
     public static int calculationAverageSalary(Employee[] wocker) {
         int sumSalary = 0;
-        int average = countingSumSalaru(wocker, sumSalary);
+        int average = countingSumSalaru(wocker);
         System.out.println("Зарплата всех сотрудников составит: " + average + " руб.");
         average = average / Employee.count;
 
@@ -67,6 +63,91 @@ public class Main {
             }
         }
     }
+
+
+    public static void main(String[] args) {
+        Employee[] wocker = new Employee[10];
+
+
+        // добавляем работников
+        wocker[0] = new Employee("asd asdas asd", 2, 55000);
+        wocker[1] = new Employee("Ник Ник Горбунков", 5, 60000);
+        wocker[5] = new Employee("Ник Ник Николаев", 5, 50000);
+        wocker[6] = new Employee("Вова Вова Вовавич", 3, 60000);
+        wocker[8] = new Employee("Ваня Ваня Иванов", 2, 65000);
+        wocker[9] = new Employee("Иван Иванович Сидоров", 1, 55000);
+        wocker[3] = new Employee("Петя Петя Петров", 4, 35000);
+        wocker[2] = new Employee("Саня Саня Петров", 5, 30000);
+
+        // Распечатываем ВСЕе ДАННЫЕ
+        printAllEmployees(wocker);
+        System.out.println();
+
+        // ОБШАЯ ЗАРПЛАТА
+        countingSumSalaru(wocker);
+        System.out.println();
+
+        // Работник с МIN ЗП
+        Employee minSalary = findMinSalary(wocker);
+        System.out.println("Самый МАЛЕНЬКИЙ оклад у " + minSalary);
+        System.out.println();
+
+        // Работник с МAX ЗП
+        Employee maxSalary = findMaxSalary(wocker);
+        System.out.println("Самый БОЛЬШОЙ оклад у " + maxSalary);
+        System.out.println();
+
+
+        // СРЕДНЯЯ ЗП
+        int averageSalary = calculationAverageSalary(wocker);
+        System.out.println("Средняя зарплата: " + averageSalary);
+        System.out.println();
+
+        // ИМЕНА СОТРУДНИКОВ
+        printFullName(wocker);
+        System.out.println();
+
+    }
+}
+//        // ИНДЕКСАЦИЯ ЗП
+//        int percent = 10;
+//        indexingSalary(wocker, percent);
+//        System.out.println();
+//
+//        // параметр № отдела: Сотрудник с МИН ЗП
+//        int department = 5;
+//        findDepartmtMinSalary(wocker, department);
+//        System.out.println();
+//
+//        // параметр № отдела: Сотрудник с МАКС ЗП
+//        findDepartmtMaxSalary(wocker, department);
+//        System.out.println();
+//
+//        // Зарплата всех сотрудников ОТДЕЛА
+//        countingDepartmSalaru(wocker, department);
+//        System.out.println();
+//
+//        // Средний оклад в ОТДЕЛЕ
+//        calculationDepartAverageSalary(wocker, department);
+//        System.out.println();
+//
+//        // ИЗМЕНЕНИЕ ЗП в ОТДЕЛЕ на %
+//        int procent = 15;
+//        indexingeDepartSalary(wocker, department, procent);
+//        System.out.println();
+//
+//        // ИМЕНА СОТРУДНИКОВ ОТДЕЛА
+//        printDepartrEmployee(wocker, department);
+//        System.out.println();
+//
+//        // Сотрудники с зарплатой выше или ниже X
+//        int x = 63250;
+//        findMoreLess(wocker, x);
+
+
+
+
+
 
 //    // ИЗМЕНЕНИЕ ЗП на %
 //    public static void indexingSalary(Employee[] wocker, int percent) {
@@ -165,85 +246,3 @@ public class Main {
 //            }
 //        }
 //    }
-
-
-
-
-    public static void main(String[] args) {
-        Employee[] wocker = new Employee[10];
-
-        // добавляем работников
-        wocker[0] = new Employee("asd asdas asd", 2, 55000);
-        wocker[1] = new Employee("Ник Ник Горбунков", 5, 60000);
-        wocker[5] = new Employee("Ник Ник Николаев", 5, 50000);
-        wocker[6] = new Employee("Вова Вова Вовавич", 3, 60000);
-        wocker[8] = new Employee("Ваня Ваня Иванов", 2, 65000);
-        wocker[9] = new Employee("Иван Иванович Сидоров", 1, 55000);
-        wocker[3] = new Employee("Петя Петя Петров", 4, 35000);
-        wocker[2] = new Employee("Саня Саня Петров", 5, 30000);
-
-        // Распечатываем ВСЕе ДАННЫЕ
-        printAllEmployees(wocker);
-        System.out.println();
-
-        // ОБШАЯ ЗАРПЛАТА
-        int sumSalary = 0;
-        countingSumSalaru(wocker, sumSalary);
-        System.out.println();
-
-        // Работник с МIN ЗП
-        Employee minSalary = findMinSalary(wocker);
-        System.out.println("Самый МАЛЕНЬКИЙ оклад у " + minSalary);
-        System.out.println();
-
-        // Работник с МAX ЗП
-        Employee maxSalary = findMaxSalary(wocker);
-        System.out.println("Самый БОЛЬШОЙ оклад у " + maxSalary);
-        System.out.println();
-
-
-        // СРЕДНЯЯ ЗП
-        int averageSalary = calculationAverageSalary(wocker);
-        System.out.println("Средняя зарплата: " + averageSalary);
-        System.out.println();
-
-        // ИМЕНА СОТРУДНИКОВ
-        printFullName(wocker);
-        System.out.println();
-
-//        // ИНДЕКСАЦИЯ ЗП
-//        int percent = 10;
-//        indexingSalary(wocker, percent);
-//        System.out.println();
-//
-//        // параметр № отдела: Сотрудник с МИН ЗП
-//        int department = 5;
-//        findDepartmtMinSalary(wocker, department);
-//        System.out.println();
-//
-//        // параметр № отдела: Сотрудник с МАКС ЗП
-//        findDepartmtMaxSalary(wocker, department);
-//        System.out.println();
-//
-//        // Зарплата всех сотрудников ОТДЕЛА
-//        countingDepartmSalaru(wocker, department);
-//        System.out.println();
-//
-//        // Средний оклад в ОТДЕЛЕ
-//        calculationDepartAverageSalary(wocker, department);
-//        System.out.println();
-//
-//        // ИЗМЕНЕНИЕ ЗП в ОТДЕЛЕ на %
-//        int procent = 15;
-//        indexingeDepartSalary(wocker, department, procent);
-//        System.out.println();
-//
-//        // ИМЕНА СОТРУДНИКОВ ОТДЕЛА
-//        printDepartrEmployee(wocker, department);
-//        System.out.println();
-//
-//        // Сотрудники с зарплатой выше или ниже X
-//        int x = 63250;
-//        findMoreLess(wocker, x);
-    }
-}
