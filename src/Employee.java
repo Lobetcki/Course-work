@@ -1,5 +1,5 @@
 public class Employee {
-    //static int count; // Переменная счетчик
+    static int count; // Переменная счетчик
     private int id;         // Поля ДАННЫХ сотрудников
     private String fullName;
     private int department;
@@ -10,7 +10,7 @@ public class Employee {
     public Employee(String fullName, int department, int salary) {
         //this.wocker = new Employee[10]; // Создали базу данных на 10 мест
 
-        this.id = Main.count++;         // Заполнение полей данных
+        this.id = count++;         // Заполнение полей данных
         this.fullName = fullName;
         this.department = department;
         this.salary = salary;
