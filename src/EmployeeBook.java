@@ -1,16 +1,57 @@
-public class EmployeeBook {
-    private final Employee[] employees;
+import javax.swing.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-    public EmployeeBook(Employee[] employees){
-       this.employees = new Employee[10];
+public class EmployeeBook {
+    private Employee[] employees; //= new Employee[10];
+
+    public EmployeeBook(Employee[] employees) {
+        this.employees = employees;
     }
 
     // ВЫВОД ВСЕХ ДАННЫХ
     public void printAllEmployees() {
-        for (Employee employee : employees) {
-            System.out.println(employee);
+        for (Employee value : employees) {
+            System.out.println(value);
         }
     }
+
+
+    // Дополнительный
+    public Employee[] arrClean() {
+        Employee[] workers = new Employee[Employee.count];
+        for (int i = 0; i < Employee.count; i++) {
+            int sol = 0;
+            int minSalary = countingSumSalaru();
+            for (int j = 0; j < employees.length; j++) {
+                 if (employees[j] != null) {
+                    if (minSalary >= employees[j].getSalary()) {
+                        minSalary = employees[j].getSalary();
+                        workers[i] = employees[j];
+                        sol = j;
+                    }
+                 }
+            }
+            employees[sol] = null;
+            //System.out.println(workers[i]);
+        }
+        employees = new Employee[10];
+        System.arraycopy(workers, 0, employees, 0, Employee.count);
+//       for (Employee value : employees) {
+//          System.out.println();
+//          System.out.println(value + "kiubljvjvljblbjk");
+        //}
+        return workers;
+    }
+//                Первым параметром является массив-источник.
+//                Вторым параметром является позиция начала нового массива.
+//                Третий параметр — массив-назначения.
+//                Четвертый параметр является начальным положением целевого массива.
+//                Последний параметр это количество элементов, которые будут скопированы.
+
+
+
 
     // Зарплата всех сотрудников
     public int countingSumSalaru() {
@@ -25,38 +66,19 @@ public class EmployeeBook {
 
     // Средний оклад
     public int calculationAverageSalary() {
-        //int sumSalary = 0;
-        int average = countingSumSalaru();
-        System.out.println("Зарплата всех сотрудников составит: " + average + " руб.");
-        average = average / Employee.count;
-
-        return average;
+        return countingSumSalaru()/Employee.count;
     }
 
     // Работник с МIN ЗП
     public Employee findMinSalary() {
-        int minSalary = employees[0].getSalary();
-        Employee minSalaryWocker = null;
-        for (Employee value : employees) {
-            if ((value != null) && (minSalary > value.getSalary())) {
-                minSalary = value.getSalary();
-                minSalaryWocker = value;
-            }
-        }
-        return minSalaryWocker;
+       Employee[] minSalaryWocker = arrClean();
+       return minSalaryWocker[0];
     }
 
     // Работник с МAX ЗП
     public Employee findMaxSalary() {
-        int maxSalary = employees[0].getSalary();
-        Employee maxSalaryWocker = null;
-        for (Employee value : employees) {
-            if (value != null && maxSalary < value.getSalary()) {
-                maxSalary = value.getSalary();
-                maxSalaryWocker = value;
-            }
-        }
-        return maxSalaryWocker;
+       Employee[] maxSalaryWocker = arrClean();
+       return maxSalaryWocker[maxSalaryWocker.length-1];
     }
 
     // ИМЕНА СОТРУДНИКОВ
@@ -68,113 +90,131 @@ public class EmployeeBook {
         }
     }
 
+    // СРЕДНЯЯ СЛОЖНОСТЬ
+
     // ИЗМЕНЕНИЕ ЗП на %
-    public void indexingSalary(Employee[] wocker, int percent) {
-        for (Employee value : wocker) {
-            if (value != null) {
-                value.setSalary(value.getSalary() + (value.getSalary() * percent / 100));
-                System.out.println("Измененная ЗП на " + percent + "% - " + value.getSalary());
+    public void indexingSalary(int percent) {
+        Employee[] perc = arrClean();
+        for (Employee value : perc) {
+            value.setSalary(value.getSalary() + (value.getSalary() * percent / 100));
+            System.out.println("Измененная ЗП на " + percent + "% - " + value.getSalary());
+        }
+    }
+
+    
+//    // Дополнительный
+    public Employee[] department(int department) {
+        Employee[] depart = arrClean();
+        Employee[] arr = new Employee[0];
+
+        for (Employee employee : depart) {
+            if (employee.getDepartment() == department) {
+                arr = Arrays.copyOf(arr, arr.length + 1);
+                arr[arr.length - 1] = employee;
             }
         }
+//        for (Employee value : arr) {
+//           System.out.println();
+//           System.out.println(value + "aaaaaaaaaaaaaaaaaaaaaaaa");
+       // }
+        return arr;
     }
 
     // параметр № отдела: Сотрудник с МИН ЗП
-    public void findDepartmtMinSalary(Employee[] wocker, int department) {
-        int min = wocker[0].getSalary();
-        Employee minim = null;
-        for (Employee value : wocker) {
-            if (value != null && value.getDepartment() == department && min > value.getSalary()) {
-                min = value.getSalary();
-                minim = value;
-            }
-        }
-        System.out.println("Минимальный оклад в отделе №" + department + " у:");
-        System.out.println(minim);
+    public Employee findDepartmtMinSalary(int department) {
+        Employee[] minim = department(department);
+        System.out.println("Минимальный оклад в отделе №" + department + " у:" + minim[0]);
+        return minim[0];
     }
-
     // параметр № отдела: Сотрудник с МАКС ЗП
-    public void findDepartmtMaxSalary(Employee[] wocker, int department) {
-        int max = wocker[0].getSalary();
-        Employee maxim = null;
-        for (Employee value : wocker) {
-            if (value != null && value.getDepartment() == department && max < value.getSalary()) {
-                max = value.getSalary();
-                maxim = value;
-            }
-        }
-        System.out.println("Максимальный оклад в отделе №" + department + " у:");
-        System.out.println(maxim);
+    public Employee findDepartmtMaxSalary(int department) {
+        Employee[] maxi = department(department);
+        System.out.println("Максимальный оклад в отделе №" + department + " у:" + maxi[maxi.length-1]);
+        return maxi[maxi.length-1];
+
     }
 
     // Зарплата всех сотрудников ОТДЕЛА
-    public int countingDepartmSalaru(Employee[] wocker, int department) {
-        int departmentSum = 0;
-        for (Employee value : wocker) {
-            if (value != null && value.getDepartment() == department) {
-                departmentSum += value.getSalary();
-            }
+    public int countingDepartmSalaru(int department) {
+        Employee[] sym = department(department);
+        int sum = 0;
+        for (Employee value : sym) {
+            sum += value.getSalary();
         }
-        return departmentSum;
-
+        return sum;
     }
 
     // Средний оклад в ОТДЕЛЕ
-    public void calculationDepartAverageSalary(Employee[] wocker, int department) {
-        int counter = 0;
-        int average = countingDepartmSalaru(wocker, department);
+    public int calculationDepartAverageSalary(int department) {
+        Employee[] symm = department(department);
+        int average = countingDepartmSalaru(department);
         System.out.println("Зарплата отдела № " + department + " составит: " + average + " руб.");
-
-        for (Employee value : wocker) {
-            if (value != null && value.getDepartment() == department) {
-                counter++;
-            }
-        }
-        System.out.println("Средняя зарплата отдела №: " + department + " - " + average/counter + " руб.");
+        System.out.println("Средняя зарплата отдела №: " + department + " - " + average/symm.length + " руб.");
+        return average/symm.length;
     }
 
     // ИЗМЕНЕНИЕ ЗП в ОТДЕЛЕ на %
-    public void indexingeDepartSalary(Employee[] wocker, int department, int percent) {
-        //newSalary = 0;
-        for (Employee value : wocker) {
-            if (value != null && value.getDepartment() == department) {
+    public void indexingeDepartSalary(int department, int percent) {
+        Employee[] symProc = department(department);
+        for (Employee value : symProc) {
                 value.setSalary(value.getSalary() + (value.getSalary() * percent / 100));
                 System.out.println("Измененная ЗП на " + percent + "% в отделе № " + department + ": " + value.getSalary());
-            }
         }
     }
 
     // ИМЕНА СОТРУДНИКОВ ОТДЕЛА
-    public void printDepartrEmployee(Employee[] wocker, int department) {
-        for (Employee value : wocker) {
-            if (value != null && value.getDepartment() == department) {
-                System.out.println("Сотрудник отдела: id = " + value.getId() + ", "  + value.getFullName() + ", " + value.getSalary());
-            }
+    public void printDepartrEmployee(int department) {
+        Employee[] name = department(department);
+        for (Employee value : name) {
+            System.out.println("Сотрудник отдела: id = " + value.getId() + ", "  + value.getFullName() + ", " + value.getSalary());
         }
     }
 
     // Сотрудники с зарплатой выше или ниже X
-    public void findMoreLess(Employee[] wocker, int x) {
-        for (Employee value : wocker) {
-            if (value != null && value.getSalary() < x) {
-                System.out.println("Работник с ЗП меньше " + x + " - id " + value.getId() + ", " + value.getFullName() + ", " + value.getSalary() + " руб.");
+    public Employee[] findLess(int x) {
+        Employee[] arr = arrClean();
+        for (int i = arr.length-1; i >= 0 ; i--) {
+            if (x > arr[i].getSalary()) {
+                Employee[] aarrr = new Employee[i+1];
+                System.arraycopy(arr, 0, aarrr, 0, ((arr.length)-(arr.length-i-1)));
+                for (Employee value : aarrr) {
+                    System.out.println(aarrr.length-1 + " Х= " + x + " ЗП МЕНЬШЕ " + value + " xxxxxxxxxxxxxxxxxxxxxxxxxx ");
+                }
+                return aarrr;
             }
         }
-        System.out.println();
-        for (Employee value : wocker) {
-            if (value != null && value.getSalary() >= x) {
-                System.out.println("Работник с ЗП больше " + x + " - id " + value.getId() + ", " + value.getFullName() + ", " + value.getSalary() + " руб." );
-            }
-        }
+        return arr;
     }
 
+    public Employee[] findMore(int x) {
+        Employee[] arr = arrClean();
+        for (int i = 0; i < arr.length; i++) {
+
+            if (arr[i].getSalary() >= x) {
+                Employee[] aarrr = new Employee[arr.length-i];
+                System.arraycopy(arr, i, aarrr, 0, arr.length-i);
+                for (Employee value : aarrr) {
+                    System.out.println(" Х= " + x + " ЗП БОЛЬШЕ " + value + "  xxxxxxxxxxxxxxxxxxxxxxxxxx");
+                }
+                return aarrr;
+            }
+        }
+        return arr;
+    }
+
+
+
+
+    //// САМОЕ СЛОЖНОЕ
+
     // Добавление работников
-    public void addWocker(Employee[] wocker, String fullName, int department, int salary) {
-        for (int i = 0; i < wocker.length; i++) {
-            if (wocker[i] == null) {
-                wocker[i] = new Employee(fullName, department, salary);
-                System.out.println("Добавлен " + wocker[i]);
+    public void addWocker(String fullName, int department, int salary) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] == null) {
+                employees[i] = new Employee(fullName, department, salary);
+                System.out.println("Добавлен " + employees[i]);
                 return;
-            } else if (Employee.count == wocker.length) {
+            } else if (Employee.count == employees.length) {
                 System.out.println("Нельзя добавить работника, закончилось место");
                 return;
             }
@@ -182,20 +222,53 @@ public class EmployeeBook {
     }
 
     // Удаление работников
-    public void deleteWocker(Employee[] wocker, String fullName, int id) {
-        for (int i = 0; i < wocker.length; i++) {
-            if (wocker[i] != null && wocker[i].getFullName() == fullName & wocker[i].getId() == id) {
-                wocker[i] = null;
-                System.out.println("Работник удален из базы данных");
-                return;
+    public void deleteWocker(String fullName, int id) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null ) {
+//                switch (true) {
+//
+//                }
+                if ((employees[i].getFullName() == fullName && employees[i].getId() == id) |
+                    (employees[i].getFullName() == fullName && employees[i].getId() == 0) |
+                    (employees[i].getFullName() == "" && employees[i].getId() == id)
+                    ) {
+                    employees[i] = null;
+                    System.out.println("Работник удален из базы данных");
+                    return;
+                }
             }
         }
         System.out.println("Такой не найден.");
     }
 
     // Изменить данные сотрудника
-    public void changeEmployeeData(String fullName) {
-
+    public void changeEmployeeData(String fullName, int department, int salary) {
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null && employees[i].getFullName() == fullName) {
+                employees[i].setDepartment(department);
+                employees[i].setSalary(salary);
+                System.out.println("Данные изменены " + employees[i]);
+                return;
+            }
+        }
+        System.out.println("Такой не найден.");
     }
 
+    //Вывод данных по отделам
+    public void printDepsrtaments() {
+        for (int i = 0; i <= 5; i++) {
+            for (Employee value : employees) {
+                if (value != null && value.getDepartment() == i) {
+                    System.out.println(value);
+                }
+            }
+        }
+    }
+
+
+
+
+
 }
+
+
